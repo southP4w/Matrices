@@ -3,7 +3,7 @@ import java.util.Random;
 class Matrix
 {
 	private final int rows, columns;
-//	private int columns;
+	//	private int columns;
 	private final int[][] grid;
 
 	public Matrix() {
@@ -11,12 +11,17 @@ class Matrix
 		grid = new int[rows][columns];
 	}
 
+	/**
+	 * Creates a 2D Array of the specified dimensions and assigns all elements a random single-digit value [1,10)
+	 * @param rows number of rows
+	 * @param columns number of columns
+	 */
 	public Matrix(int rows, int columns) {
 		Random rand = new Random();
 		grid = new int[this.rows = rows][this.columns = columns];
 		for (int row = 0; row < rows; row++)
 			for (int col = 0; col < columns; col++)
-				grid[row][col] = rand.nextInt(1, 5);
+				grid[row][col] = rand.nextInt(1, 10);
 	}
 
 	public int getRows() {
@@ -56,7 +61,7 @@ class Matrix
 			return null;
 		}
 		Matrix dotProduct = new Matrix(matrixA.getRows(), matrixB.getColumns());
-		zero(dotProduct);
+		zero(dotProduct);	// set the new Matrix to all 0's
 		for (int row = 0; row < matrixA.rows; row++)
 			for (int col = 0; col < matrixB.columns; col++)
 				for (int i = 0; i < matrixB.rows; i++)
