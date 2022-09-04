@@ -2,8 +2,9 @@ import java.util.Random;
 
 class Matrix
 {
-	private int rows, columns;
-	private int[][] grid;
+	private final int rows, columns;
+//	private int columns;
+	private final int[][] grid;
 
 	public Matrix() {
 		rows = columns = 0;
@@ -13,9 +14,9 @@ class Matrix
 	public Matrix(int rows, int columns) {
 		Random rand = new Random();
 		grid = new int[this.rows = rows][this.columns = columns];
-		for (int i = 0; i < rows; i++)
-			for (int j = 0; j < columns; j++)
-				grid[i][j] = rand.nextInt(1, 5);
+		for (int row = 0; row < rows; row++)
+			for (int col = 0; col < columns; col++)
+				grid[row][col] = rand.nextInt(1, 5);
 	}
 
 	public int getRows() {
@@ -40,11 +41,34 @@ class Matrix
 			return null;
 		}
 		Matrix sum = new Matrix(matrixA.getRows(), matrixA.getColumns());
-		for (int i = 0; i < matrixA.getRows(); i++)
-			for (int j = 0; j < matrixA.getColumns(); j++)
-				sum.grid[i][j] = matrixA.grid[i][j] + matrixB.grid[i][j];
+		zero(sum);
+		for (int row = 0; row < matrixA.getRows(); row++)
+			for (int col = 0; col < matrixA.getColumns(); col++)
+				sum.grid[row][col] = matrixA.grid[row][col] + matrixB.grid[row][col];
 
 		return sum;
+	}
+
+	public static Matrix multiply(Matrix matrixA, Matrix matrixB) {
+		if (matrixA.getColumns() != matrixB.getRows()) {
+			System.out.println("UNDEFINED: Matrix A does not have the same number of " +
+					"columns as Matrix B has rows!");
+			return null;
+		}
+		Matrix dotProduct = new Matrix(matrixA.getRows(), matrixB.getColumns());
+		zero(dotProduct);
+		for (int row = 0; row < matrixA.rows; row++)
+			for (int col = 0; col < matrixB.columns; col++)
+				for (int i = 0; i < matrixB.rows; i++)
+					dotProduct.grid[row][col] += matrixA.grid[row][i] * matrixB.grid[i][col];
+
+		return dotProduct;
+	}
+
+	public static void zero(Matrix matrix) {
+		for (int i = 0; i < matrix.rows; i++)
+			for (int j = 0; j < matrix.columns; j++)
+				matrix.grid[i][j] = 0;
 	}
 
 	public String toString() {
