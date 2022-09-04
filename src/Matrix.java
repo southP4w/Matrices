@@ -3,7 +3,6 @@ import java.util.Random;
 class Matrix
 {
 	private final int rows, columns;
-	//	private int columns;
 	private final int[][] grid;
 
 	public Matrix() {
@@ -12,7 +11,7 @@ class Matrix
 	}
 
 	/**
-	 * Creates a 2D Array of the specified dimensions and assigns all elements a random single-digit value [1,10)
+	 * Creates a 2D Array of the specified dimensions and assigns each element a random single-digit value [1,10)
 	 * @param rows number of rows
 	 * @param columns number of columns
 	 */
@@ -33,34 +32,34 @@ class Matrix
 	}
 
 	public static Matrix add(Matrix matrixA, Matrix matrixB) {
-		if (matrixA.getRows() != matrixA.getColumns()) {
+		if (matrixA.rows != matrixA.columns) {
 			System.out.println("UNDEFINED: Matrix A is not square!");
 			return null;
 		}
-		if (matrixB.getRows() != matrixB.getColumns()) {
+		if (matrixB.rows != matrixB.columns) {
 			System.out.println("UNDEFINED: Matrix B is not square!");
 			return null;
 		}
-		if (matrixA.getRows() != matrixB.getRows() || matrixA.getColumns() != matrixB.getColumns()) {
+		if (matrixA.rows != matrixB.rows) {
 			System.out.println("UNDEFINED: Matrix A and B are not equally-sized square matrices!");
 			return null;
 		}
-		Matrix sum = new Matrix(matrixA.getRows(), matrixA.getColumns());
+		Matrix sum = new Matrix(matrixA.rows, matrixA.columns);
 		zero(sum);
-		for (int row = 0; row < matrixA.getRows(); row++)
-			for (int col = 0; col < matrixA.getColumns(); col++)
+		for (int row = 0; row < matrixA.rows; row++)
+			for (int col = 0; col < matrixA.columns; col++)
 				sum.grid[row][col] = matrixA.grid[row][col] + matrixB.grid[row][col];
 
 		return sum;
 	}
 
 	public static Matrix multiply(Matrix matrixA, Matrix matrixB) {
-		if (matrixA.getColumns() != matrixB.getRows()) {
+		if (matrixA.columns != matrixB.rows) {
 			System.out.println("UNDEFINED: Matrix A does not have the same number of " +
 					"columns as Matrix B has rows!");
 			return null;
 		}
-		Matrix dotProduct = new Matrix(matrixA.getRows(), matrixB.getColumns());
+		Matrix dotProduct = new Matrix(matrixA.rows, matrixB.columns);
 		zero(dotProduct);	// set the new Matrix to all 0's
 		for (int row = 0; row < matrixA.rows; row++)
 			for (int col = 0; col < matrixB.columns; col++)
