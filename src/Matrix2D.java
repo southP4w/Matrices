@@ -1,21 +1,22 @@
 import java.util.Random;
 
-class Matrix
+class Matrix2D
 {
 	private final int rows, columns;
 	private final int[][] grid;
 
-	public Matrix() {
+	public Matrix2D() {
 		rows = columns = 0;
 		grid = new int[rows][columns];
 	}
 
 	/**
 	 * Creates a 2D Array of the specified dimensions and assigns each element a random single-digit value [1,10)
-	 * @param rows number of rows
+	 *
+	 * @param rows    number of rows
 	 * @param columns number of columns
 	 */
-	public Matrix(int rows, int columns) {
+	public Matrix2D(int rows, int columns) {
 		Random rand = new Random();
 		grid = new int[this.rows = rows][this.columns = columns];
 		for (int row = 0; row < rows; row++)
@@ -31,7 +32,7 @@ class Matrix
 		return columns;
 	}
 
-	public static Matrix add(Matrix matrixA, Matrix matrixB) {
+	public static Matrix2D add(Matrix2D matrixA, Matrix2D matrixB) {
 		if (matrixA.rows != matrixA.columns) {
 			System.out.println("UNDEFINED: Matrix A is not square!");
 			return null;
@@ -44,7 +45,7 @@ class Matrix
 			System.out.println("UNDEFINED: Matrix A and B are not equally-sized square matrices!");
 			return null;
 		}
-		Matrix sum = new Matrix(matrixA.rows, matrixA.columns);
+		Matrix2D sum = new Matrix2D(matrixA.rows, matrixA.columns);
 		zero(sum);
 		for (int row = 0; row < matrixA.rows; row++)
 			for (int col = 0; col < matrixA.columns; col++)
@@ -53,26 +54,26 @@ class Matrix
 		return sum;
 	}
 
-	public static Matrix multiply(Matrix matrixA, Matrix matrixB) {
-		if (matrixA.columns != matrixB.rows) {
+	public static Matrix2D multiply(Matrix2D matrix2DA, Matrix2D matrix2DB) {
+		if (matrix2DA.columns != matrix2DB.rows) {
 			System.out.println("UNDEFINED: Matrix A does not have the same number of " +
 					"columns as Matrix B has rows!");
 			return null;
 		}
-		Matrix dotProduct = new Matrix(matrixA.rows, matrixB.columns);
-		zero(dotProduct);	// set the new Matrix to all 0's
-		for (int row = 0; row < matrixA.rows; row++)
-			for (int col = 0; col < matrixB.columns; col++)
-				for (int i = 0; i < matrixB.rows; i++)
-					dotProduct.grid[row][col] += matrixA.grid[row][i] * matrixB.grid[i][col];
+		Matrix2D dotProduct = new Matrix2D(matrix2DA.rows, matrix2DB.columns);
+		zero(dotProduct);    // set the new Matrix to all 0's
+		for (int row = 0; row < matrix2DA.rows; row++)
+			for (int col = 0; col < matrix2DB.columns; col++)
+				for (int i = 0; i < matrix2DB.rows; i++)
+					dotProduct.grid[row][col] += matrix2DA.grid[row][i] * matrix2DB.grid[i][col];
 
 		return dotProduct;
 	}
 
-	public static void zero(Matrix matrix) {
-		for (int i = 0; i < matrix.rows; i++)
-			for (int j = 0; j < matrix.columns; j++)
-				matrix.grid[i][j] = 0;
+	public static void zero(Matrix2D matrix2D) {
+		for (int i = 0; i < matrix2D.rows; i++)
+			for (int j = 0; j < matrix2D.columns; j++)
+				matrix2D.grid[i][j] = 0;
 	}
 
 	public String toString() {
